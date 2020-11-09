@@ -1,0 +1,18 @@
+Package: RBFNN
+Type: Package
+Title: Radial Basis Function Neural Network
+Version: 1.0
+Date: 2020-11-09
+Author: Xavier Martín Ballesteros
+Maintainer: Xavier Martín Ballesteros <xmartin46@gmail.com>
+Description: TODO
+License: GPL (>= 2)
+Encoding: UTF-8
+Imports: 
+    Rcpp (>= 1.0.5),
+    RcppParallel (>= 5.0.2),
+    parallelDist,
+    nnet
+LinkingTo: Rcpp, RcppParallel
+SystemRequirements: GNU make
+RoxygenNote: 7.1.1.9000
