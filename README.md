@@ -15,7 +15,7 @@ architecture (Figure [1](#fig:RBFN)) consists of three layers: one input
 layer, one hidden layer and one output layer.
 
 ![Radial Basis Function Neural Network
-architecture.](./images/RBFN2.png)
+architecture.](./images/RBFNN.png)
 
 The input vector \(\bold{x}\) is a \(n\)-dimensional array that is
 forwarded to each neuron in the hidden layer. Each neuron \(i\) in the
