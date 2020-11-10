@@ -3,28 +3,28 @@
 Radial Basis Function Neural Network (RBFNN) is a particular
 type of Artificial Neural Network (ANN). The difference with other types
 of ANNs is that they use radial basis functions as the activation
-function\[1\]. It has been used in a wide variety of fields including
+function<sup id="a1">[1](#RBF)</sup>. It has been used in a wide variety of fields including
 classification, interpolation, time-series analysis and image
 processing.
 
 # Network architecture
 
 Theoretically, RBFNNs can be employed in any model and network
-(single-layer or multi-layer). However, since , the traditional
-architecture (Figure [1](#fig:RBFNN)) consists of three layers: one input
+(single-layer or multi-layer). However, since Broomhead and Lowe 1988 [[1]](#broomhead) the traditional
+architecture consists of three layers: one input
 layer, one hidden layer and one output layer.
 
 <p align="center">
-    <img src="/images/RBFN.PNG" width="50%" />
+    <img \label{RBFNN} src="/images/RBFN.PNG" width="50%" />
 </p>
 
 The input vector **x** is a *n*-dimensional array that is
 forwarded to each neuron in the hidden layer. Each neuron *i* in the
 hidden layer has an instance of the training set (usually called
 centroid or *prototype*), and computes an RBF as its nonlinear
-activation function, typically the Gaussian\[2\]:
+activation function, typically the Gaussian<sup id="a2">[2](#Functions)</sup>:
 
-[![\\ h_i(\bold{x}) = \exp\left[- \dfrac{||\bold{x} - \bold{c}_i||^2}{2\sigma_i^2}\right]](https://latex.codecogs.com/svg.latex?%5C%5C%20h_i(%5Cbold%7Bx%7D)%20%3D%20%5Cexp%5Cleft%5B-%20%5Cdfrac%7B%7C%7C%5Cbold%7Bx%7D%20-%20%5Cbold%7Bc%7D_i%7C%7C%5E2%7D%7B2%5Csigma_i%5E2%7D%5Cright%5D)](#_)
+[![\\ \begin{equation} \\ h_i(\bold{x}) = \exp\left[- \dfrac{||\bold{x} - \bold{c}_i||^2}{2\sigma_i^2}\right] \\ \end{equation}](https://latex.codecogs.com/svg.latex?%5C%5C%20%5Cbegin%7Bequation%7D%20%5C%5C%20h_i(%5Cbold%7Bx%7D)%20%3D%20%5Cexp%5Cleft%5B-%20%5Cdfrac%7B%7C%7C%5Cbold%7Bx%7D%20-%20%5Cbold%7Bc%7D_i%7C%7C%5E2%7D%7B2%5Csigma_i%5E2%7D%5Cright%5D%20%5C%5C%20%5Cend%7Bequation%7D)](#_)
 
 where *c<sub>i</sub>* is the centroid of the neuron *i* and *h<sub>i</sub>* its
 output. Usually, the same RBF is applied to all neurons. The outputs of
@@ -196,9 +196,15 @@ in the feed-forward phase, when predicting.
 Finally, the interpretation of each node in the hidden layer is easier
 in RBFNNs.
 
-1.  A radial basis function (RBF) is a real-valued function in which
-    their response decreases (or increases) monotonically with distance
-    from a central point.
+---
 
-2.  Other types of RBF are multiquadric, inverse multiquadric and Cauchy
-    functions.
+<b name="RBF">1</b>: A radial basis function (RBF) is a real-valued function in which
+    their response decreases (or increases) monotonically with distance
+    from a central point. [↩](#a1)
+
+<b name="Functions">2</b>: Other types of RBF are multiquadric, inverse multiquadric and Cauchy
+    functions.  [↩](#a2)
+
+## References
+<a id="broomhead">[1]</a> 
+Broomhead, D. S., & Lowe, D. (1988). Radial basis functions, multi-variable functional interpolation and adaptive networks (No. RSRE-MEMO-4148). Royal Signals and Radar Establishment Malvern (United Kingdom).
