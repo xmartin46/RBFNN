@@ -11,33 +11,32 @@ processing.
 
 Theoretically, RBFNNs can be employed in any model and network
 (single-layer or multi-layer). However, since , the traditional
-architecture (Figure [1](#fig:RBFN)) consists of three layers: one input
+architecture (Figure [1](#fig:RBFNN)) consists of three layers: one input
 layer, one hidden layer and one output layer.
 
-![Radial Basis Function Neural Network
-architecture.](./images/RBFNN.png)
+<p align="center">
+    <img src="/images/RBFN.PNG" width="50%" />
+</p>
 
-The input vector \(\bold{x}\) is a \(n\)-dimensional array that is
-forwarded to each neuron in the hidden layer. Each neuron \(i\) in the
+The input vector **x** is a *n*-dimensional array that is
+forwarded to each neuron in the hidden layer. Each neuron *i* in the
 hidden layer has an instance of the training set (usually called
 centroid or *prototype*), and computes an RBF as its nonlinear
 activation function, typically the Gaussian\[2\]:
 
-\[\label{eq:rbf}
-    h_i(\bold{x}) = \exp\left[- \dfrac{||\bold{x} - \bold{c}_i||^2}{2\sigma_i^2}\right]\]
+[![\\ h_i(\bold{x}) = \exp\left[- \dfrac{||\bold{x} - \bold{c}_i||^2}{2\sigma_i^2}\right]](https://latex.codecogs.com/svg.latex?%5C%5C%20h_i(%5Cbold%7Bx%7D)%20%3D%20%5Cexp%5Cleft%5B-%20%5Cdfrac%7B%7C%7C%5Cbold%7Bx%7D%20-%20%5Cbold%7Bc%7D_i%7C%7C%5E2%7D%7B2%5Csigma_i%5E2%7D%5Cright%5D)](#_)
 
-where \(c_i\) is the centroid of the neuron \(i\) and \(h_i\) its
+where *c<sub>i</sub>* is the centroid of the neuron *i* and *h<sub>i</sub>* its
 output. Usually, the same RBF is applied to all neurons. The outputs of
 the neurons are linearly combined with weights
-\(\bold{w} = \{w_i\}^k_{i = 1}\) to produce the network output
-\(f_{t}(\bold{x})\):
+[![\\ \bold{w} = \{w_i\}^k_{i = 1}](https://latex.codecogs.com/svg.latex?%5C%5C%20%5Cbold%7Bw%7D%20%3D%20%5C%7Bw_i%5C%7D%5Ek_%7Bi%20%3D%201%7D)](#_) to produce the network output
+[![\\ f_{t}(\bold{x})](https://latex.codecogs.com/svg.latex?%5C%5C%20f_%7Bt%7D(%5Cbold%7Bx%7D))](#_):
 
-\[f_{t}(\bold{x}) = \sum_{i = 1}^k w_i h_i(\bold{x})
-    \label{eq:RBFN_output}\]
+[![\\ f_{t}(\bold{x}) = \sum_{i = 1}^k w_i h_i(\bold{x})](https://latex.codecogs.com/svg.latex?%5C%5C%20f_%7Bt%7D(%5Cbold%7Bx%7D)%20%3D%20%5Csum_%7Bi%20%3D%201%7D%5Ek%20w_i%20h_i(%5Cbold%7Bx%7D))](#_)
 
 It can be included an additional neuron in the hidden layer to model the
 biases of the output layer. This neuron does not have any centroid but a
-constant activation function \(h_{0}(\bold{x}) = 1\).
+constant activation function [![\\ h_{0}(\bold{x}) = 1](https://latex.codecogs.com/svg.latex?%5C%5C%20h_%7B0%7D(%5Cbold%7Bx%7D)%20%3D%201)](#_).
 
 Depending on the type of problem we are addressing, the output layer
 will vary its number of neurons. If it is a regression task, there is
@@ -46,14 +45,14 @@ needed only 1 neuron. For binary classification, it is also needed only
 more than 2 classes (multinomial logistic regression), we need to use
 more than 1 neuron (specifically, one for each class) and apply the
 softmax function to normalize the output values for later assigning the
-input vector\(\bold{x}\) the class of the output with maximum value.
+input vector **x** the class of the output with maximum value.
 
-\[Class(\bold{x}) = \argmax_{t \in \{1, \dots, C\}}f_{t}(\bold{x})\]
+[![\\ \rm{Class}(\bold{x}) = \underset{t \in \{1, \dots, C\}}{\arg\max} \hspace{0.2cm} f_{t}(\bold{x}) \\  \\ ](https://latex.codecogs.com/svg.latex?%5C%5C%20%5Crm%7BClass%7D(%5Cbold%7Bx%7D)%20%3D%20%5Cunderset%7Bt%20%5Cin%20%5C%7B1%2C%20%5Cdots%2C%20C%5C%7D%7D%7B%5Carg%5Cmax%7D%20%5Chspace%7B0.2cm%7D%20f_%7Bt%7D(%5Cbold%7Bx%7D)%20%5C%5C%20%20%5C%5C%20)](#_)
 
 # Learning phase
 
 As explained earlier, the parameters of this neural network are the
-centroids \(c_{i}\) and the width \(\sigma_{i}\) of each RBF, and the
+centroids *c<sub>i</sub>* and the width [![\\ \sigma_i](https://latex.codecogs.com/svg.latex?%5C%5C%20%5Csigma_i)](#_) of each RBF, and the
 weights from the hidden layer to the output layer. There are multiple
 ways of training each parameter. Some produce better results than others
 but are more costly. It is up to the user to decide where to find the
@@ -67,14 +66,14 @@ adjusting the network weights.
 ## Selecting RBF centroids
 
 In order to select the centroids for the RBFNN, typically unsupervised
-training methods from clustering are used, such as the \(k\)-means
+training methods from clustering are used, such as the *k*-means
 clustering algorithm.
 
-The \(k\)-means algorithm was selected as one of the top-10 data mining
+The *k*-means algorithm was selected as one of the top-10 data mining
 algorithms identified by the International Conference on Data Mining
 (ICDM) in December 2006 . It is a simple iterative method to partition a
-given dataset into a specified number of clusters, \(k\). We must remark
-that the value of \(k\) is crucial, as with too few centers the network
+given dataset into a specified number of clusters, *k*. We must remark
+that the value of *k* is crucial, as with too few centers the network
 will not make a good generalization (underfitting) and with too many
 centers the network will learn useless information from noisy data
 (overfitting). This algorithm iterates between two steps until
@@ -85,12 +84,12 @@ is repeated until the assignment in step 1 does not vary. The metric
 used is the Euclidean distance, and the objective function we are trying
 to minimize is
 
-\[J(\bold{x}) = \sum_{j = 1}^{k}\sum_{i = 1}^{n} ||\bm{x}_{i} - \bm{c}_{j}||^{2}\]
+[![\\ J(\bold{x}) = \sum_{j = 1}^{k}\sum_{i = 1}^{n} ||\bold{x}_{i} - \bold{c}_{j}||^{2} \\ ](https://latex.codecogs.com/svg.latex?%5C%5C%20J(%5Cbold%7Bx%7D)%20%3D%20%5Csum_%7Bj%20%3D%201%7D%5E%7Bk%7D%5Csum_%7Bi%20%3D%201%7D%5E%7Bn%7D%20%7C%7C%5Cbold%7Bx%7D_%7Bi%7D%20-%20%5Cbold%7Bc%7D_%7Bj%7D%7C%7C%5E%7B2%7D%20%5C%5C%20)](#_)
 
 Convergence is guaranteed in a finite number of iterations. The
 selection of the initial centroids is very important because the final
 result depends on it. Although random initialization usually leads to
-good results, there exists other initialization (e.g. \(k\)-means++)
+good results, there exists other initialization (e.g. *k*-means++)
 which perform better.
 
 Another way to select the centroids is by selecting randomly a subset of
@@ -111,16 +110,16 @@ There is a wide variety of methods for selecting the widths based on
 heuristics. Following are explained the most commonly used. If we have
 the clusters pre-computed, we can compute the width of each RBF by just
 computing the standard deviation of each cluster
-\(\sqrt{\sum_{x \in cluster \hspace{0.05cm} i} ||\bm{x} - \bm{c}_{i}||^{2}/n_{i}}\).
-Alternatively, the width \(\sigma_{i}\) can be the average of the
-distances between the \(i\)-th RBF centroid and its \(L\) nearest
+[![\\ \sqrt{\sum_{x \in cluster \hspace{0.05cm} i} \dfrac{||\bold{x} - \bold{c}_{i}||^{2}}{n_{i}}}](https://latex.codecogs.com/svg.latex?%5C%5C%20%5Csqrt%7B%5Csum_%7Bx%20%5Cin%20cluster%20%5Chspace%7B0.05cm%7D%20i%7D%20%5Cdfrac%7B%7C%7C%5Cbold%7Bx%7D%20-%20%5Cbold%7Bc%7D_%7Bi%7D%7C%7C%5E%7B2%7D%7D%7Bn_%7Bi%7D%7D%7D)](#_).
+Alternatively, the width [![\\ \sigma_i](https://latex.codecogs.com/svg.latex?%5C%5C%20%5Csigma_i)](#_) can be the average of the
+distances between the *i*-th RBF centroid and its *L* nearest
 centroids or the distance between its closest centroid multiplied by a
-factor \(a\) ranging from 1.0 to 1.5
-(\(\sigma_{i} = a||\bm{c}_{i} - \bm{c}_{closest \hspace{0.05cm} to \hspace{0.05cm} \bm{c}_{i}}||\)).
+factor *a* ranging from 1.0 to 1.5
+([![\\ \sigma_{i} = a||\bold{c}_{i} - \bold{c}_{closest \hspace{0.05cm} to \hspace{0.05cm} \bold{c}_{i}}|| \\ ](https://latex.codecogs.com/svg.latex?%5C%5C%20%5Csigma_%7Bi%7D%20%3D%20a%7C%7C%5Cbold%7Bc%7D_%7Bi%7D%20-%20%5Cbold%7Bc%7D_%7Bclosest%20%5Chspace%7B0.05cm%7D%20to%20%5Chspace%7B0.05cm%7D%20%5Cbold%7Bc%7D_%7Bi%7D%7D%7C%7C%20%5C%5C%20)](#_)).
 
 Moreover, using the same width for all RBF is proven to have universal
 approximation capability. It can be selected as the
-\(d_{max}/\sqrt{2k}\), where \(d_{max}\) is the maximum distance between
+[![\\ d_{max}/\sqrt{2k}](https://latex.codecogs.com/svg.latex?%5C%5C%20d_%7Bmax%7D%2F%5Csqrt%7B2k%7D)](#_), where *d<sub>max</sub>* is the maximum distance between
 the selected centroids. This choice makes the RBF neither too steep nor
 too flat.
 
@@ -132,10 +131,9 @@ of the outputs from the RBFs (Eq.
 minimize the error at the output can be computed with a linear
 pseudo-inverse solution:
 
-\[\label{eq:LSLR}
-    \bold{W} = \bm{X}^{+}y = (\bm{X}^{T}X)^{-1}\bm{X}^{T}y\]
+[![\\ \bold{W} = \bold{X}^{+}y = (\bold{X}^{T}X)^{-1}\bold{X}^{T}y](https://latex.codecogs.com/svg.latex?%5C%5C%20%5Cbold%7BW%7D%20%3D%20%5Cbold%7BX%7D%5E%7B%2B%7Dy%20%3D%20(%5Cbold%7BX%7D%5E%7BT%7DX)%5E%7B-1%7D%5Cbold%7BX%7D%5E%7BT%7Dy)](#_)
 
-where \(X\) is the matrix of the values of the RBFs and \(y\) the labels
+where ***X*** is the matrix of the values of the RBFs and *y* the labels
 of the dataset. Using the Least Squares Linear Regression equation we
 ensure a global minimum and the cost function is relatively fast.
 
