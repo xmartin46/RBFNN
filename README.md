@@ -1,4 +1,41 @@
-# Radial Basis Function Neural Networks
+# RBFNN: Radial Basis Function Neural Network
+
+Package for a Radial Basis Function Neural Network, providing the training and predicting phases. It can handle multiclassification problems (currently working on other tasks). It can use different ways of initializing the parameters of the network, particularly the centroids and smoothing parameters in the hidden layer.
+
+### Installation
+
+Step 1: Install the devtools package
+```R
+install.packages("devtools")
+```
+
+Step2: Install the package from GitHub
+```R
+library(devtools)
+devtools::install_github("xmartin46/RBFNN")
+```
+
+Step 3: Load the package
+```R
+library(RBFNN)
+```
+
+### TODO
+
+- [ ] Change parameters' name of functions for better understanding.
+- [ ] Change parameter it (used for the set.seed()) in order to be an optional parameter (it = NULL).
+- [ ] Add more ways to initialize the parameters.
+  - [ ] Centroids for the hidden layer (k-means...).
+  - [ ] Smoothing parameter (width) of each RBF (the same for all, different for each one...).
+- [ ] Change stds[1] for stds in hiddenLayer function (change .cpp file). This has to be done because in the future, the widths will be able to be different from other RBFs.
+- [ ] Extend to multiple tasks: regression and binary classification.
+- [ ] Group output of RBFNN_train into one single object, that have the centroids, stds and model in it.
+- [ ] Documentation: Example in RBFNN_predict for other input types (distance and Gaussian kernel).
+- [ ] Include more Radial Basis Functions.
+- [ ] Add tests for the functions.
+- [ ] Change function names?
+
+# The model
 
 Radial Basis Function Neural Network (RBFNN) is a particular
 type of Artificial Neural Network (ANN). The difference with other types
@@ -7,7 +44,7 @@ function<sup id="a1">[1](#RBF)</sup>. It has been used in a wide variety of fiel
 classification, interpolation, time-series analysis and image
 processing.
 
-# Network architecture
+## Network architecture
 
 Theoretically, RBFNNs can be employed in any model and network
 (single-layer or multi-layer). However, since Broomhead and Lowe 1988 [[1]](#broomhead) the traditional
@@ -49,7 +86,7 @@ input vector **x** the class of the output with maximum value.
 
 [![\\ \rm{Class}(\bold{x}) = \underset{t \in \{1, \dots, C\}}{\arg\max} \hspace{0.2cm} f_{t}(\bold{x}) \\  \\ ](https://latex.codecogs.com/svg.latex?%5C%5C%20%5Crm%7BClass%7D(%5Cbold%7Bx%7D)%20%3D%20%5Cunderset%7Bt%20%5Cin%20%5C%7B1%2C%20%5Cdots%2C%20C%5C%7D%7D%7B%5Carg%5Cmax%7D%20%5Chspace%7B0.2cm%7D%20f_%7Bt%7D(%5Cbold%7Bx%7D)%20%5C%5C%20%20%5C%5C%20)](#_)
 
-# Learning phase
+## Learning phase
 
 As explained earlier, the parameters of this neural network are the
 centroids *c<sub>i</sub>* and the width [![\\ \sigma_i](https://latex.codecogs.com/svg.latex?%5C%5C%20%5Csigma_i)](#_) of each RBF, and the
@@ -63,7 +100,7 @@ focuses on the hidden layer, selecting suitable centers and their
 respective width, whereas the second phase focuses on the output layer
 adjusting the network weights.
 
-## Selecting RBF centroids
+### Selecting RBF centroids
 
 In order to select the centroids for the RBFNN, typically unsupervised
 training methods from clustering are used, such as the *k*-means
@@ -98,7 +135,7 @@ representative of the whole dataset. On the contrary case, learning
 based on the random selection of the RBF centers may lead to poor
 performances.
 
-## Selecting RBF widths
+### Selecting RBF widths
 
 The setting of the RBF widths is also crucial for the network. When they
 are too large, the estimated probability density is over-smoothed and
@@ -123,7 +160,7 @@ approximation capability. It can be selected as the
 the selected centroids. This choice makes the RBF neither too steep nor
 too flat.
 
-## Training the output weights
+### Training the output weights
 
 For regression problems, the output layer is just a linear combination
 of the outputs from the RBFs (Eq.
@@ -168,7 +205,7 @@ descent.
 After this final step of calculating the output layer weights, all
 parameters of the RBF network have been determined.
 
-# RBFNNs versus MLPs
+## RBFNNs versus MLPs
 
 RBFNNs differ from Multilayer Perceptron (MLP) architecture in some
 aspects. A comparison between MLP and RBFNN is described below.
@@ -205,6 +242,6 @@ in RBFNNs.
 <b name="Functions">2</b>: Other types of RBF are multiquadric, inverse multiquadric and Cauchy
     functions.  [↩](#a2)
 
-## References
+# References
 <a id="broomhead">[1]</a> 
 Broomhead, D. S., & Lowe, D. (1988). Radial basis functions, multi-variable functional interpolation and adaptive networks (No. RSRE-MEMO-4148). Royal Signals and Radar Establishment Malvern (United Kingdom).
